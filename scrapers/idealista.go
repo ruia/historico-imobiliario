@@ -2,11 +2,13 @@ package scrapers
 
 import (
 	// "fmt"
-	"github.com/gocolly/colly"
+	"fmt"
 	"log"
+
+	"github.com/gocolly/colly"
 )
 
-type Idealista struct {}
+type Idealista struct{}
 
 func (i Idealista) ObterPrecosAtualizados(url string) {
 	//var preco string
@@ -14,7 +16,7 @@ func (i Idealista) ObterPrecosAtualizados(url string) {
 
 	c.OnHTML("span[class=info-data-price]>span[class=txt-bold]", func(e *colly.HTMLElement) {
 		// log.Printf("[Auchan] %.2f € \n", convert(e.ChildText(".value")))
-		log.Printf("[Imovirtual]", e.ChildText()))
+		log.Printf("[Imovirtual]", e.ChildText(""))
 	})
 
 	c.OnError(func(r *colly.Response, err error) {

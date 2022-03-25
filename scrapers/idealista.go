@@ -10,13 +10,14 @@ import (
 
 type Idealista struct{}
 
-func (i Idealista) ObterPrecosAtualizados(url string) {
-	//var preço string
+func (i Idealista) ObterPrecosAtualizados(url string) float64 {
+	var preco float64
+
 	c := colly.NewCollector()
 
 	c.OnHTML("span[class=info-data-price]>span[class=txt-bold]", func(e *colly.HTMLElement) {
-		// log.Printf("[Auchan] %.2f € \n", convert(e.ChildText(".value")))
-		log.Printf("[Imovirtual]", e.ChildText(""))
+		preco = ConvertePreco(e.ChildText(".value"))
+		log.Printf("[Imovirtual] %.2f € \n", preco)
 	})
 
 	c.OnError(func(r *colly.Response, err error) {
@@ -24,5 +25,6 @@ func (i Idealista) ObterPrecosAtualizados(url string) {
 	})
 
 	c.Visit(url)
-	//return preço
+
+	return preco
 }

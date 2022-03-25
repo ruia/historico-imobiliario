@@ -9,17 +9,19 @@ import (
 
 type Imovirtual struct{}
 
-func (i Imovirtual) ObterPrecosAtualizados(url string) {
-	//var preco string
-	c := colly.NewCollector(
-	//colly.UserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11"),
-	)
+func (i Imovirtual) ObterPrecosAtualizados(url string) float64 {
+	var preco float64
+
+	c := colly.NewCollector()
+
 	c.OnRequest(func(r *colly.Request) {
 		r.Headers.Set("Accept", "*/*")
 	})
+
 	c.OnHTML("strong", func(e *colly.HTMLElement) {
 		if e.Attr("aria-label") == "Preço" {
-			log.Printf("[Imovirtual] %.0f", ConvertePreco(e.Text))
+			preco = ConvertePreco(e.Text)
+			log.Printf("[Imovirtual] %.0f", preco)
 		}
 	})
 
@@ -28,5 +30,6 @@ func (i Imovirtual) ObterPrecosAtualizados(url string) {
 	})
 
 	c.Visit(url)
-	//return preco
+
+	return preco
 }

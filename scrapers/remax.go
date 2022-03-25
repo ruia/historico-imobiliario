@@ -9,16 +9,20 @@ import (
 
 type Remax struct{}
 
-func (i Remax) ObterPrecosAtualizados(url string) {
-	//var preço string
+func (i Remax) ObterPrecosAtualizados(url string) float64 {
+	var preco float64
+
 	c := colly.NewCollector(
 		colly.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36"),
 	)
+
 	c.OnRequest(func(r *colly.Request) {
 		r.Headers.Set("Accept", "*/*")
 	})
+
 	c.OnHTML("input", func(e *colly.HTMLElement) {
-		// log.Printf("[Remax] %.0f", ConvertePreco(e.ChildText(".listing-price")))
+		preco = ConvertePreco(e.ChildText(".listing-price"))
+		// log.Printf("[Remax] %.0f", preco)
 		log.Printf("[Remax]", e)
 	})
 
@@ -31,5 +35,6 @@ func (i Remax) ObterPrecosAtualizados(url string) {
 	})
 
 	c.Visit(url)
-	//return preço
+
+	return preco
 }

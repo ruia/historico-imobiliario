@@ -11,7 +11,7 @@ import (
 type Idealista struct{}
 
 func (i Idealista) ObterPrecosAtualizados(url string) {
-	//var preco string
+	//var preço string
 	c := colly.NewCollector()
 
 	c.OnHTML("span[class=info-data-price]>span[class=txt-bold]", func(e *colly.HTMLElement) {
@@ -24,5 +24,5 @@ func (i Idealista) ObterPrecosAtualizados(url string) {
 	})
 
 	c.Visit(url)
-	//return preco
+	//return preço
 }

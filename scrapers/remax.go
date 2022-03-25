@@ -10,7 +10,7 @@ import (
 type Remax struct{}
 
 func (i Remax) ObterPrecosAtualizados(url string) {
-	//var preco string
+	//var preço string
 	c := colly.NewCollector(
 		colly.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36"),
 	)
@@ -31,5 +31,5 @@ func (i Remax) ObterPrecosAtualizados(url string) {
 	})
 
 	c.Visit(url)
-	//return preco
+	//return preço
 }
